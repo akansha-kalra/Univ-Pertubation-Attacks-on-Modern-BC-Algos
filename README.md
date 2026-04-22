@@ -15,7 +15,7 @@ The project aims to develop Adversarial Attacks on Behavior Cloning Policies to 
 - Implicit Behavior Cloning (IBC)
 - Diffusion Policy
 - Vector Quantized-Behavior Transformer(VQ-BET)
-<b></i>
+</b></i>
 
 # Environment setup
 Begin by installing our conda environment on a Linux machine with Nvidia GPU. On Ubuntu 22.04 ,
