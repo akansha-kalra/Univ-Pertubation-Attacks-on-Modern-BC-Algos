@@ -1,4 +1,4 @@
-# Dataset Poisoning Attacks on Behavioral Cloning Policies #
+# How Vulnerable is My Learned Policy?  Adversarial Attacks on Modern Behavior Cloning Algorithms #
 <p align="center">
   <a href="https://arxiv.org/abs/2502.03698">View on ArXiv</a> |
   <a href="https://sites.google.com/view/uap-attacks-on-bc">Project Website</a>
