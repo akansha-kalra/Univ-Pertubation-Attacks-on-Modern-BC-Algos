@@ -31,3 +31,4 @@ $ conda activate adv_robodiff
 
 
 The training dataset should go in `./data/robomimic/datasets/` and the checkpoints are stored in `/pre_trained_checkpoints/{task}_image/`, you can download pretrained policies as well as data from [here](https://diffusion-policy.cs.columbia.edu/data/). 
+<b> More details coming soon </b>
