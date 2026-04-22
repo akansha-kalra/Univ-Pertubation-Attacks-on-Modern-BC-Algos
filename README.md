@@ -4,9 +4,9 @@
   <a href="https://sites.google.com/view/uap-attacks-on-bc">Project Website</a>
 </p>
 
-<b> Akansha Kalra <sup>*</sup>, Basavasagar Patil<sup>*</sup> , Guanhong Tao, Daniel S. Brown </b>
+<b> Akansha Kalra <sup>&ast;</sup>, Bavasagar Patil <sup>&ast;</sup> Guanhong Tao, Daniel S. Brown </b>
 
-<sup>*</sup> <i>Equal Contribution</i>
+<sup>&ast;</sup> <i>Equal Contribution</i>
 
 
 # Environment setup
