@@ -1,0 +1,81 @@
+task: 'square_ph'
+
+algo: 'Diffusion_Policy'
+
+checkpoint: '/pre_trained_checkpoints/square_image/diffusion_policy_cnn/train_0/checkpoints/epoch=1250-test_mean_score=1.000.ckpt'
+checkpoint_num: 1
+
+
+patch_path: '/pre_trained_checkpoints/square_image/diffusion_policy_cnn/train_0/checkpoints/Exp_FinalRun1-UAP-DP-pretrainedTrain0-Myseed0-Square-Epsilon_0.125_Targeted_False/untar_pert_0.125_epoch_40_mean_score_0.0_robot0_eye_in_hand_image.pkl'
+
+
+#NOTE-Use ABS if DP
+dataset_path: '/data/robomimic/datasets/square/ph/image_abs.hdf5'
+
+log: true
+attack: true
+save_video: False
+attack_type: patch
+device: 'cuda:0'
+view: 'both'
+
+clip_min: -1
+clip_max: 1
+targeted: false
+epsilon: 0.125
+
+n_vis: 0
+n_train: 0
+n_test: 50
+n_train_vis: 0
+n_test_vis: 0
+n_envs: null
+max_steps: null
+attack_after_timesteps: 0
+crf: 18
+fps : 10
+
+
+horizon: 16
+n_obs_steps: 2
+n_action_steps: 8
+n_latency_steps: 0
+dataset_obs_steps: ${n_obs_steps}
+past_action_visible: False
+keypoint_visible_rate: 1.0
+
+
+name: train_diffusion_unet_hybrid
+_target_: diffusion_policy.workspace.train_diffusion_unet_hybrid_workspace.TrainRobomimicUniPertImageWorkspaceDP
+
+env_runner: diffusion_policy.env_runner.robomimic_image_runner.RobomimicImageRunner
+
+policy:
+  _target_: diffusion_policy.policy.diffusion_unet_hybrid_image_policy.DiffusionUnetHybridImagePolicy
+
+  shape_meta: ${shape_meta}
+
+  noise_scheduler:
+    _target_: diffusers.schedulers.scheduling_ddpm.DDPMScheduler
+    num_train_timesteps: 100
+    beta_start: 0.0001
+    beta_end: 0.02
+    beta_schedule: squaredcos_cap_v2
+    variance_type: fixed_small # Yilun's paper uses fixed_small_log instead, but easy to cause Nan
+    clip_sample: True # required when predict_epsilon=False
+    prediction_type: epsilon # or sample
+
+  horizon: ${horizon}
+  n_action_steps: ${eval:'${n_action_steps}+${n_latency_steps}'}
+  n_obs_steps: ${n_obs_steps}
+  num_inference_steps: 100
+  obs_as_global_cond: ${obs_as_global_cond}
+  crop_shape: [76, 76]
+  # crop_shape: null
+  diffusion_step_embed_dim: 128
+  down_dims: [512, 1024, 2048]
+  kernel_size: 5
+  n_groups: 8
+  cond_predict_scale: True
+  obs_encoder_group_norm: True
+  eval_fixed_crop: True
