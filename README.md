@@ -27,12 +27,21 @@ And activate it by
 $ conda activate adv_robodiff
 ```
 
-
-
-
 The training dataset should go in `./data/robomimic/datasets/` and the checkpoints are stored in `/pre_trained_checkpoints/{task}_image/`, you can download pretrained DP, IBC and LSTM-GMM policies as well as data from [here](https://diffusion-policy.cs.columbia.edu/data/). 
 
-We release our trained BC and VQBET policies here https://uofu.box.com/s/3zbwsrcc04l5exniew7r6tn64kwtqhz0.
+We release our trained BC and VQBET policies [here](https://uofu.box.com/s/3zbwsrcc04l5exniew7r6tn64kwtqhz0) . And our UAP attacks across all BC algorithms are present in the `final_UAP_patches` directory for all 3 tasks : Lift, Can , Square. For each task and BC algorithm, we trained and evaluated UAP patches using three different random seeds. The corresponding patches can be accessed at `final_UAP_patches/task/algo/train_{seed}/`. 
 
 
-<b> More details coming soon </b>
+To train the UAP attack,for example on DP on Square task,  use 
+```console
+python train.py  --config-name=Run1_BC_Untargeted_UAP_Square.yaml --config-dir=/diffusion_policy/config/
+```
+
+
+To evaluate the above white-box UAP attack against DP on the Square task, update patch_path to point to the desired UAP patch. You may use either a newly trained patch or one of our publicly released UAP patches at `final_UAP_patches/square/diffusion_polic_cnn/` 
+
+```console
+python Eval.py  --config-name=Eval_DP_1.yaml --config-dir=/diffusion_policy/Eval_config/
+```
+
+Similarly, to train and evaluate any attack across different behavior cloning (BC) algorithms, update the corresponding task configuration files located in `diffusion/policy/config/task/` to specify the appropriate attack settings and the trained BC checkpoint location. For reference, configuration files for training UAP attack on the Square task across all supported BC algorithms can be found `diffusion/policy/config/` .
