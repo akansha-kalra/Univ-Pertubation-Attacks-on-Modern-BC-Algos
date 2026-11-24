@@ -44,5 +44,13 @@ To evaluate the above white-box UAP attack against DP on the Square task, update
 python Eval.py  --config-name=Eval_DP_1.yaml --config-dir=/diffusion_policy/Eval_config/
 ```
 
+
 Similarly, to train and evaluate any attack across different behavior cloning (BC) algorithms, update the corresponding task configuration files located in `diffusion/policy/config/task/` to specify the appropriate attack settings and the trained BC checkpoint location.  
 For reference, configuration files for training UAP attack on the Square task across all supported BC algorithms can be found `diffusion/policy/config/` .
+
+### Note on Perturbation Budgets
+
+Following the normalization scheme in the [original DDPM paper (Sec. 4)](https://arxiv.org/pdf/2006.11239), [Diffusion Policy (DP)](https://github.com/real-stanford/diffusion_policy/blob/5ba07ac6661db573af695b419a7947ecb704690f/diffusion_policy/policy/diffusion_unet_hybrid_image_policy.py#L222) scales image observations from `[0, 1]` to `[-1, 1]` using the transformation `2x - 1`, whereas all other BC algorithms considered in our work operate in the original robomimic observation range of `[0, 1]`.
+
+Thus, a perturbation budget of ε in DP's normalized observation space corresponds to ε/2 in the original observation space. To ensure equivalent perturbation budgets across all BC algorithms, we use **2ε for DP and ε for all other BC algorithms**.
+
